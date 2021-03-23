@@ -18,6 +18,10 @@ Desarrollar un clon de Kanban como se muestra en la imagen. El diseño es abiert
 
 - Las 4 columnas deben de cubrir todo el espacio horizontal del navegador y deben de tener el mismo espacio entre ellas.
 
+- Incluir 4 tarjetas en la columna "Pendiente", 3 tajeras en "En proceso", 2 tarjetas en "En pruebas" y 1 tarjeta en "Terminado".
+
+- Las tarjetas deben de incluir in algún texto.
+
 ## Requerimientos:
 
 - react
