@@ -1,8 +1,24 @@
 import React, { useState } from "react";
 import { TaskCard } from "./components/TaskCard";
 import { StatusCard } from "./components/StatusCard";
+import { TaskCreator } from "./components/TaskCreator";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  title: {
+    margin: "0",
+    textAlign: "center",
+    backgroundColor: "#383f70",
+    color: "white",
+    padding: "15px",
+  },
+});
 
 function App() {
+  const classes = useStyles();
+
   const [taskItem, setTaskItem] = useState([
     { name: "Despliegue de software", status: "pendiente" },
     { name: "Pruebas unitarias", status: "pendiente" },
@@ -19,26 +35,18 @@ function App() {
   const renderTasks = (status) =>
     taskItem
       .filter((task) => task.status === status)
-      .map((task) => <TaskCard task={task} key={task.name} />);
+      .map((task) => <TaskCard task={task} key={task.id} />);
 
   return (
     <div className="App">
-      <h1>Tablero Kanban</h1>
-
-      <div className="board">
-        <StatusCard name="Pendiente">
-          <div>{renderTasks("pendiente")}</div>
-        </StatusCard>
-        <StatusCard name="En Proceso">
-          <div>{renderTasks("proceso")}</div>
-        </StatusCard>
-        <StatusCard name="En Pruebas">
-          <div>{renderTasks("pruebas")}</div>
-        </StatusCard>
-        <StatusCard name="Terminado">
-          <div>{renderTasks("terminado")}</div>
-        </StatusCard>
-      </div>
+      <Typography variant="h3" className={classes.title}>Tablero Kanban</Typography>
+      <TaskCreator />
+      <Grid container spacing={4}>
+        <StatusCard name="Pendiente">{renderTasks("pendiente")}</StatusCard>
+        <StatusCard name="En Proceso">{renderTasks("proceso")}</StatusCard>
+        <StatusCard name="En Pruebas">{renderTasks("pruebas")}</StatusCard>
+        <StatusCard name="Terminado">{renderTasks("terminado")}</StatusCard>
+      </Grid>
     </div>
   );
 }
