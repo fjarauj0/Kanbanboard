@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { TaskCard } from "./components/TaskCard";
+import { StatusCard } from "./components/StatusCard";
 
 function App() {
+  const [taskItem, setTaskItem] = useState([
+    { name: "Despliegue de software", status: "pendiente" },
+    { name: "Pruebas unitarias", status: "pendiente" },
+    { name: "Corregir fallos", status: "pendiente" },
+    { name: "Codificación", status: "pendiente" },
+    { name: "Revisión del diseño", status: "proceso" },
+    { name: "Elaborar Presupuesto", status: "proceso" },
+    { name: "Análisis de requisitos", status: "proceso" },
+    { name: "Sistema de diseño", status: "pruebas" },
+    { name: "Elaborar cronograma", status: "pruebas" },
+    { name: "Recolección de requisitos", status: "terminado" },
+  ]);
+
+  const renderTasks = (status) =>
+    taskItem
+      .filter((task) => task.status === status)
+      .map((task) => <TaskCard task={task} key={task.name} />);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Tablero Kanban</h1>
+
+      <div className="board">
+        <StatusCard name="Pendiente">
+          <div>{renderTasks("pendiente")}</div>
+        </StatusCard>
+        <StatusCard name="En Proceso">
+          <div>{renderTasks("proceso")}</div>
+        </StatusCard>
+        <StatusCard name="En Pruebas">
+          <div>{renderTasks("pruebas")}</div>
+        </StatusCard>
+        <StatusCard name="Terminado">
+          <div>{renderTasks("terminado")}</div>
+        </StatusCard>
+      </div>
     </div>
   );
 }
