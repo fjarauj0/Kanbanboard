@@ -38,13 +38,26 @@ function App() {
         t.name === task.name ? { ...t, status: t.status + newstatus } : t
       )
     );
+    console.log(taskItem);
+  };
+  const createTask = (name) => {
+    
+  };
+
+  const deleteTask = (task) => {
+    setTaskItem(taskItem.filter((t) => t.name !== task.name));
   };
 
   const renderTasks = (status) =>
     taskItem
       .filter((task) => task.status === status)
       .map((task) => (
-        <TaskCard task={task} key={task.name} setStatus={setStatus} />
+        <TaskCard
+          task={task}
+          key={task.name}
+          setStatus={setStatus}
+          deleteTask={deleteTask}
+        />
       ));
 
   return (

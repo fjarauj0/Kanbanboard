@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   form: {
-    margin: '20px',
-    display: 'flex',
-    justifyContent: 'center'
+    margin: "20px",
+    display: "flex",
+    justifyContent: "center",
   },
 });
 
