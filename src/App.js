@@ -20,32 +20,44 @@ function App() {
   const classes = useStyles();
 
   const [taskItem, setTaskItem] = useState([
-    { name: "Despliegue de software", status: "pendiente" },
-    { name: "Pruebas unitarias", status: "pendiente" },
-    { name: "Corregir fallos", status: "pendiente" },
-    { name: "Codificación", status: "pendiente" },
-    { name: "Revisión del diseño", status: "proceso" },
-    { name: "Elaborar Presupuesto", status: "proceso" },
-    { name: "Análisis de requisitos", status: "proceso" },
-    { name: "Sistema de diseño", status: "pruebas" },
-    { name: "Elaborar cronograma", status: "pruebas" },
-    { name: "Recolección de requisitos", status: "terminado" },
+    { name: "Despliegue de software", status: 0 },
+    { name: "Pruebas unitarias", status: 0 },
+    { name: "Corregir fallos", status: 0 },
+    { name: "Codificación", status: 0 },
+    { name: "Revisión del diseño", status: 1 },
+    { name: "Elaborar Presupuesto", status: 1 },
+    { name: "Análisis de requisitos", status: 1 },
+    { name: "Sistema de diseño", status: 2 },
+    { name: "Elaborar cronograma", status: 2 },
+    { name: "Recolección de requisitos", status: 3 },
   ]);
+
+  const setStatus = (task, newstatus) => {
+    setTaskItem(
+      taskItem.map((t) =>
+        t.name === task.name ? { ...t, status: t.status + newstatus } : t
+      )
+    );
+  };
 
   const renderTasks = (status) =>
     taskItem
       .filter((task) => task.status === status)
-      .map((task) => <TaskCard task={task} key={task.id} />);
+      .map((task) => (
+        <TaskCard task={task} key={task.name} setStatus={setStatus} />
+      ));
 
   return (
     <div className="App">
-      <Typography variant="h3" className={classes.title}>Tablero Kanban</Typography>
+      <Typography variant="h3" className={classes.title}>
+        Tablero Kanban
+      </Typography>
       <TaskCreator />
       <Grid container spacing={4}>
-        <StatusCard name="Pendiente">{renderTasks("pendiente")}</StatusCard>
-        <StatusCard name="En Proceso">{renderTasks("proceso")}</StatusCard>
-        <StatusCard name="En Pruebas">{renderTasks("pruebas")}</StatusCard>
-        <StatusCard name="Terminado">{renderTasks("terminado")}</StatusCard>
+        <StatusCard name="Pendiente">{renderTasks(0)}</StatusCard>
+        <StatusCard name="En Proceso">{renderTasks(1)}</StatusCard>
+        <StatusCard name="En Pruebas">{renderTasks(2)}</StatusCard>
+        <StatusCard name="Terminado">{renderTasks(3)}</StatusCard>
       </Grid>
     </div>
   );
