@@ -3,8 +3,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   card: {
@@ -13,9 +14,6 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     height: "100px",
     borderRadius: "10px",
-    boxShadow: "0px 0px 11px 4px rgb(0 0 0 / 10%)",
-    padding: "20px",
-    marginBottom: "20px",
     justifyContent: "space-between",
   },
   icon: {
@@ -27,18 +25,19 @@ export const TaskCard = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.card}>
+    <Box boxShadow={3} mb={2} p={3} className={classes.card}>
       <Typography variant="body1">{props.task.name}</Typography>
-      <div>
+      <Box>
         {props.task.status === 0 ? (
           ""
         ) : (
           <IconButton
             className={classes.icon}
+            color="primary"
             aria-label="left"
             onClick={() => props.setStatus(props.task, -1)}
           >
-            <ArrowBackIosIcon />
+            <ArrowBackIosIcon fontSize="small" />
           </IconButton>
         )}
         {props.task.status === props.statusLength - 1 ? (
@@ -46,21 +45,23 @@ export const TaskCard = (props) => {
         ) : (
           <IconButton
             className={classes.icon}
+            color="primary"
             aria-label="right"
             onClick={() => props.setStatus(props.task, 1)}
           >
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon fontSize="small" />
           </IconButton>
         )}
 
         <IconButton
           className={classes.icon}
+          color="secondary"
           aria-label="delete"
           onClick={() => props.deleteTask(props.task)}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

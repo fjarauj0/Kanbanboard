@@ -17,7 +17,7 @@ export const StatusCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} md={3}>
       <Paper className={classes.card}>
         <Typography variant="h5" gutterBottom className={classes.name}>
           {props.name}
