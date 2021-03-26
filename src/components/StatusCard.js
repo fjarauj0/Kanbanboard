@@ -6,12 +6,9 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   card: {
-    boxSizing: "border-box",
-    padding: "50px 20px",
-    width: "100%",
-    backgroundColor: "#ffffff",
-    borderRadius: "10px",
     height: "fit-content",
+    margin: "20px",
+    padding: "50px 20px",
   },
   name: { textAlign: "center", marginBottom: " 40px" },
 });

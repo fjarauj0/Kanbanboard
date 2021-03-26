@@ -18,9 +18,9 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     justifyContent: "space-between",
   },
-  icon:{
-    padding: "5px"
-  }
+  icon: {
+    padding: "5px",
+  },
 });
 
 export const TaskCard = (props) => {
@@ -41,7 +41,7 @@ export const TaskCard = (props) => {
             <ArrowBackIosIcon />
           </IconButton>
         )}
-        {props.task.status === 3 ? (
+        {props.task.status === props.statusLength - 1 ? (
           ""
         ) : (
           <IconButton

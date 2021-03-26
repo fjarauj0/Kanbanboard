@@ -19,6 +19,7 @@ export const TaskCreator = (props) => {
   const updateNewTaskValue = (e) => setNewTaskName(e.target.value);
   const createNewTask = () => {
     console.log(newTaskName);
+    props.createTask(newTaskName);
     setNewTaskName("");
   };
 

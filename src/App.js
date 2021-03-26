@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TaskCard } from "./components/TaskCard";
 import { StatusCard } from "./components/StatusCard";
 import { TaskCreator } from "./components/TaskCreator";
@@ -14,23 +14,14 @@ const useStyles = makeStyles({
     color: "white",
     padding: "15px",
   },
+  board: {},
 });
 
 function App() {
   const classes = useStyles();
 
-  const [taskItem, setTaskItem] = useState([
-    { name: "Despliegue de software", status: 0 },
-    { name: "Pruebas unitarias", status: 0 },
-    { name: "Corregir fallos", status: 0 },
-    { name: "Codificación", status: 0 },
-    { name: "Revisión del diseño", status: 1 },
-    { name: "Elaborar Presupuesto", status: 1 },
-    { name: "Análisis de requisitos", status: 1 },
-    { name: "Sistema de diseño", status: 2 },
-    { name: "Elaborar cronograma", status: 2 },
-    { name: "Recolección de requisitos", status: 3 },
-  ]);
+  const statusList = ["Pendiente", "En Procesoss", "En Pruebas", "Terminado"];
+  const [taskItem, setTaskItem] = useState([]);
 
   const setStatus = (task, newstatus) => {
     setTaskItem(
@@ -38,10 +29,36 @@ function App() {
         t.name === task.name ? { ...t, status: t.status + newstatus } : t
       )
     );
-    console.log(taskItem);
   };
+
+  useEffect(() => {
+    let data = localStorage.getItem("tasks");
+    if (data != null) {
+      setTaskItem(JSON.parse(data));
+    } else {
+      setTaskItem([
+        { name: "Despliegue de software", status: 0 },
+        { name: "Pruebas unitarias", status: 0 },
+        { name: "Corregir fallos", status: 0 },
+        { name: "Codificación", status: 0 },
+        { name: "Revisión del diseño", status: 1 },
+        { name: "Elaborar Presupuesto", status: 1 },
+        { name: "Análisis de requisitos", status: 1 },
+        { name: "Sistema de diseño", status: 2 },
+        { name: "Elaborar cronograma", status: 2 },
+        { name: "Recolección de requisitos", status: 3 },
+      ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(taskItem));
+  }, [taskItem]);
+
   const createTask = (name) => {
-    
+    if (!taskItem.find((t) => t.name === name) && name !== "") {
+      setTaskItem([...taskItem, { name: name, status: 0 }]);
+    }
   };
 
   const deleteTask = (task) => {
@@ -57,6 +74,7 @@ function App() {
           key={task.name}
           setStatus={setStatus}
           deleteTask={deleteTask}
+          statusLength={statusList.length}
         />
       ));
 
@@ -65,12 +83,13 @@ function App() {
       <Typography variant="h3" className={classes.title}>
         Tablero Kanban
       </Typography>
-      <TaskCreator />
-      <Grid container spacing={4}>
-        <StatusCard name="Pendiente">{renderTasks(0)}</StatusCard>
-        <StatusCard name="En Proceso">{renderTasks(1)}</StatusCard>
-        <StatusCard name="En Pruebas">{renderTasks(2)}</StatusCard>
-        <StatusCard name="Terminado">{renderTasks(3)}</StatusCard>
+      <TaskCreator createTask={createTask} />
+      <Grid container className={classes.board}>
+        {statusList.map((status, index) => (
+          <StatusCard key={status} name={status}>
+            {renderTasks(index)}
+          </StatusCard>
+        ))}
       </Grid>
     </div>
   );
